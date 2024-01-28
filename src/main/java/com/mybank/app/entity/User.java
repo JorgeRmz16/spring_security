@@ -2,6 +2,10 @@ package com.mybank.app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mybank.app.validation.ExistsByUsername;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -18,12 +22,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true)
+	@ExistsByUsername
 	@NotBlank
 	@Size(min=4, max=15)
+	@Column(unique=true)
 	private String username;
 	
 	@NotBlank
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // no enviar password en JSON
 	private String password;
 	
 	@ManyToMany
@@ -35,8 +41,13 @@ public class User {
 			)
 	private List<Role> roles;
 	
-	private boolean enable;
+	private boolean enabled; 
+	@PrePersist
+	public void prePersist() {
+		enabled = true;
+	}
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Transient //indicar que no esta mapeado a la tabla
 	private boolean admin;
 }
