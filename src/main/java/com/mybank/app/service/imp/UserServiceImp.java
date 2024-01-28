@@ -37,10 +37,11 @@ public class UserServiceImp implements UserService{
 	public User save(User user) {
 		Optional<Role> optionalRoleUsere = roleRepository.findByName("ROLE_USER");
 		List<Role> roles = new ArrayList<>();
+		
 		optionalRoleUsere.ifPresent(roles::add);
 		
 		if(user.isAdmin()) {
-			Optional<Role> optionalRoleAdmin = roleRepository.findByName("ROLE_USER");
+			Optional<Role> optionalRoleAdmin = roleRepository.findByName("ROLE_ADMIN");
 			optionalRoleAdmin.ifPresent(roles::add);
 		}
 		user.setRoles(roles);

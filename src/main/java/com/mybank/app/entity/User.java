@@ -3,6 +3,7 @@ package com.mybank.app.entity;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter
@@ -18,8 +19,11 @@ public class User {
 	private Long id;
 	
 	@Column(unique=true)
-	private String userName;
+	@NotBlank
+	@Size(min=4, max=15)
+	private String username;
 	
+	@NotBlank
 	private String password;
 	
 	@ManyToMany
@@ -30,6 +34,8 @@ public class User {
 			uniqueConstraints={@UniqueConstraint(columnNames = {"user_id", "role_id"})}
 			)
 	private List<Role> roles;
+	
+	private boolean enable;
 	
 	@Transient //indicar que no esta mapeado a la tabla
 	private boolean admin;
