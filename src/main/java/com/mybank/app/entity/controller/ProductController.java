@@ -13,7 +13,7 @@ import com.mybank.app.service.ProductService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/appi/products")
+@RequestMapping("/api/products")
 public class ProductController {
 	@Autowired
 	ProductService productService;
@@ -21,7 +21,7 @@ public class ProductController {
 	//@Autowired
 	//private ProductValidation productValidation;
 	
-	@GetMapping("/all")
+	@GetMapping
 	public List<Product> list(){
 		return productService.findAll();
 	}

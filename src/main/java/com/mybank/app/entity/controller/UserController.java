@@ -15,7 +15,7 @@ import com.mybank.app.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/appi/users")
+@RequestMapping("/api/users")
 public class UserController {
 	
 	@Autowired
